@@ -1,20 +1,14 @@
-name: dstu-gost
+name: CI
 
 on:
   push:
     branches:
       - master
       - develop
-    paths:
-      - packages/dstu-gost
-      - !packages
   pull_request:
     branches:
       - master
       - develop
-    paths:
-      - packages/dstu-gost
-      - !packages
 
 jobs:
   build:
@@ -30,13 +24,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install, build
-        run: |
-          npm install
-          npm run build --if-present
-      - name: npm run check
-        run: npm run check
-      - name: npm test
-        run: npm test
+      - run: yarn run bootstrap
+      - run: yarn run test:cov
+      - name: codecov
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
+      - run: yarn run lint
 
 

@@ -1,5 +1,5 @@
 {
-  "name": "dstu-gost",
+  "name": "@1-corp/dstu-gost",
   "version": "0.0.1",
   "description": "gost28147-89 in TS",
   "main": "index.js",

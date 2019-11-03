@@ -4,6 +4,13 @@
   "description": "Monorepo for crypto primitives used in Ukrainian national crypto",
   "license": "MIT",
   "repository": "github:1-corp/ts-crypto-ua",
+  "scripts": {
+    "compile": "lerna run compile",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "test:cov": "lerna run test:cov",
+    "bootstrap": "lerna bootstrap"
+  },
   "devDependencies": {
     "lerna": "^3.18.3"
   }

@@ -1,10 +1,10 @@
 {
-  "name": "ts-dstu4145",
+  "name": "dstu4145",
   "version": "0.0.1",
   "description": "Ukrainian national EC cryptography (DSTU-4145) TypeScript only implementaion",
   "main": "lib/index.js",
   "scripts": {
-    "test": "",
+    "test": "jest",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
@@ -38,7 +38,7 @@
     "buffer": ">= 3.0",
     "jksreader": "^1.0.0",
     "js-lzma": "0.x",
-    "ts-gost": "^0.0.1"
+    "@1-corp/dstu-gost": "^0.0.1"
   },
   "devDependencies": {
     "prettier": "^1.17.0",
