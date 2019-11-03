@@ -1,5 +1,5 @@
 var assert = require("assert"),
-    gost89 = require("..");
+    gost89 = require("../index");
 
 describe('Gost', function() {
     describe('#crypt()', function() {

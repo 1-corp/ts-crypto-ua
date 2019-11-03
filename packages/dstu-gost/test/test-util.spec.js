@@ -1,5 +1,5 @@
 var assert = require("assert"),
-    gost89 = require("..");
+    gost89 = require("../index");
 
 describe('utils', function () {
     describe('dumb_kdf()', function () {

@@ -1,0 +1,67 @@
+{
+  "name": "dstu-gost",
+  "version": "0.0.1",
+  "description": "gost28147-89 in TS",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "lint": "eslint src/*.js",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dstucrypt/gost89.git"
+  },
+  "keywords": [
+    "gost89"
+  ],
+  "author": "Bohdan Vanieiev",
+  "contributors": [
+    "Ilya Petrov"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1-corp/ts-crypto-ua/packages/gost"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "roots": [
+      "test"
+    ],
+    "rootDir": ".",
+    "transformIgnorePatterns": [
+      "node_modules/.*",
+      ".*\\.js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "verbose": true,
+    "testRegex": ".spec.(j|t)s$",
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "jsdom"
+  },
+  "homepage": "https://github.com/1-corp/ts-crypto-ua/",
+  "devDependencies": {
+    "@types/jest": "^24.0.21",
+    "@types/node": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-plugin-compat": "^3.3.0",
+    "gts": "^1.1.0",
+    "jest": "^24.9.0",
+    "jest-cli": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "~3.5.0"
+  },
+  "dependencies": {
+    "buffer": ">= 3.0"
+  }
+}

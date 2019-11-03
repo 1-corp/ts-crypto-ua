@@ -1,0 +1,16 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "plugins": [
+    "compat"
+  ],
+  "rules": {
+    "compat/compat": "error",
+    "semi": "error"
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  }
+}
