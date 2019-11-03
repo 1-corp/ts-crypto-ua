@@ -4,7 +4,7 @@ import { Gost } from './gost89';
 
 const WRAP_IV = Buffer.from([0x4a, 0xdd, 0xa2, 0x2c, 0x79, 0xe8, 0x21, 0x05]);
 
-export const wrap = (cek: Buffer, kek: Buffer, iv: Buffer) => {
+export const wrap_key = (cek: Buffer, kek: Buffer, iv: Buffer) => {
   let idx;
   const gost = new Gost();
   const cekicv = Buffer.alloc(40);
@@ -42,7 +42,7 @@ export const wrap = (cek: Buffer, kek: Buffer, iv: Buffer) => {
   return Buffer.from(result.slice(0, 44));
 };
 
-export const unwrap = (wcek: Buffer, kek: Buffer) => {
+export const unwrap_key = (wcek: Buffer, kek: Buffer) => {
   let idx, err;
   const gost = new Gost();
 
@@ -83,7 +83,7 @@ export const unwrap = (wcek: Buffer, kek: Buffer) => {
   err |= icv[3] ^ icv_check[3];
 
   if (err !== 0) {
-    throw new Error('Key unwrap failed. Checksum mismatch');
+    throw new Error('Key unwrap_key failed. Checksum mismatch');
   }
 
   return Buffer.from(cekicv.slice(0, 32));

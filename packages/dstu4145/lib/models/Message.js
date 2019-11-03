@@ -64,7 +64,7 @@ Message.prototype.constructEnveloped = function constructEnveloped(ob) {
     keyEncryptionAlgorithm: {
       algorithm: "dhSinglePass-cofactorDH-gost34311kdf",
       parameters: {
-        algorithm: "Gost28147-cfb-wrap",
+        algorithm: "Gost28147-cfb-wrap_key",
         parameters: null
       }
     },

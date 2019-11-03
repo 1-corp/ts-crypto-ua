@@ -1,7 +1,7 @@
 Gost89
 ======
 
-Gost89 cipher and hash function implementation in JS
+Gost89 cipher and hash function implementations in TypeScript.
 
 Algos
 -----
@@ -29,37 +29,43 @@ Examples
 All function except Hash.update() accept buffer objects, string or byte arrays.
 
 Hash messages:
-```js
-var gost89 = require("gost89");
-var hash = gost89.gosthash("LA LA LA SHTIRLITZ KURWA VODKA MATRIOSKA");
+```typescript
+import {gosthash, Hash} from 'dstu-gost'
+const hash = gosthash("LA LA LA SHTIRLITZ KURWA VODKA MATRIOSKA");
 // <Buffer 0a 32 7f 3b ce e1 f3 de 0f 40 61 2e c3 ce d0 a3 29 51 b8 b2 16 8e 9a 01 0f 5b 15 46 c0 a9 1d 93>
 
-var hash_ctx = gost89.Hash.init();
+const hash_ctx = new Hash();
 hash_ctx.update("ARBITARY SIZED VODKA");
 hash_ctx.update("VODKA VODKA MORE VODKA");
-var hash = hash_ctx.finish(Buffer.alloc(32));
+const hash = hash_ctx.finish();
 // <Buffer 2c 1e d1 f1 2c 05 13 38 b2 7f 42 5d ea df e0 62 17 e6 9b 2c 19 d4 4a cd 24 ac 8d 5b b7 53 34 3f>
 
 hash_ctx.reset();
 hash.update32(buffer_of_32_bytes);
-var hash = hash_ctx.finish(Buffer.alloc(32));
+
+const preallocated = Buffer.alloc(32);
+const hash = hash_ctx.finish(preallocated);
+// hash === preallocated
 ```
 
 
 Encrypt message:
 
-```js
-var gost = gost89.init();
-var clear = Buffer.from('lol', 'binary');
-gost.key(Buffer.alloc(32));
-var out = gost.crypt(clear, out);
+```typescript
+import {Gost} from "dstu-gost";
+const gost = new Gost();
+const clear = Buffer.from('lol', 'binary');
+gost.key(Buffer.alloc(32)); // 32 zeroes
+const out = Buffer.alloc(32); // preallocate result buffer
+gost.crypt(clear, out); // same as const out = gost.crypt(clear);
 ```
 
 Encrypt messages in CFB mode:
 
-```js
-var gost = gost89.init();
-var out = gost.crypt_cfb(iv, clear);
+```typescript
+import {Gost} from "dstu-gost";
+const gost = new Gost();
+const out = gost.crypt_cfb(iv, clear);
 // out contains encrypted text
 ```
 
@@ -67,13 +73,14 @@ var out = gost.crypt_cfb(iv, clear);
 Properly encrypt message:
 
 ```js
-var gost = gost89.init();
-var key = crypto.randomBytes(32);
-gost.key(key);
-var enc = gost.crypt(text, enc);
+const gost = new Gost();
+const key = crypto.randomBytes(32);
+// set key
+gost.key(key); 
+const enc = gost.crypt(text, enc);
 
-var iv = crypto.randomBytes(8);
-var shared_key = some_diffie_hellman_here(me, you); // see jkurwa
-var wrapped_key = gost89.wrap_key(key, shared_key, iv);
+const iv = crypto.randomBytes(8);
+const shared_key = some_diffie_hellman_here(me, you); // see jkurwa
+const wrapped_key = wrap_key(key, shared_key, iv);
 // send enc and wrapped_key to other party
 ```

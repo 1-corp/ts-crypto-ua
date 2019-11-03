@@ -1,6 +1,9 @@
 {
   "name": "ts-crypto-ua",
   "private": false,
+  "description": "Monorepo for crypto primitives used in Ukrainian national crypto",
+  "license": "MIT",
+  "repository": "github:1-corp/ts-crypto-ua",
   "devDependencies": {
     "lerna": "^3.18.3"
   }

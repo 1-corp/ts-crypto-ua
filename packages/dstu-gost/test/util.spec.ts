@@ -1,5 +1,5 @@
 import { dumb_kdf, pbkdf } from '../src/util';
-import { unwrap, wrap } from '../src/keywrap';
+import { unwrap_key, wrap_key } from '../src/keywrap';
 
 describe('utils', () => {
   describe('dumb_kdf()', () => {
@@ -38,7 +38,7 @@ describe('utils', () => {
   });
 
   describe('key_wrap()', () => {
-    it('should wrap encryption key', () => {
+    it('should wrap_key encryption key', () => {
       const kek = Buffer.from(
         '9c6e6852023b46f499f25b9b0eb7027387fdd5650f5d638ee5f99eb8dc781fde',
         'hex'
@@ -52,13 +52,13 @@ describe('utils', () => {
       const expect_key =
         'e90fe95628e715f4d6f3d1151ded367250f7006648ffffde574a4ea38250c1c5a0fdff11f36d9186d3b27c60';
 
-      const key = wrap(cek, kek, iv);
+      const key = wrap_key(cek, kek, iv);
       expect(key.toString('hex')).toEqual(expect_key);
     });
   });
 
   describe('key_unwrap()', () => {
-    it('should unwrap encryption key', () => {
+    it('should unwrap_key encryption key', () => {
       let wcek = Buffer.from(
         'e90fe95628e715f4d6f3d1151ded367250f7006648ffffde574a4ea38250c1c5a0fdff11f36d9186d3b27c60',
         'hex'
@@ -71,7 +71,7 @@ describe('utils', () => {
       let expect_key =
         '11080811020a0d0913040f020111190b04060c101d1c0a0911060e160b121419';
 
-      let key = unwrap(wcek, kek);
+      let key = unwrap_key(wcek, kek);
       expect(key.toString('hex')).toEqual(expect_key);
 
       expect_key =
@@ -84,7 +84,7 @@ describe('utils', () => {
         '1de57ae661b7e142727170dd5066d04bd63231d5a207778075d17a831e853902',
         'hex'
       );
-      key = unwrap(wcek, kek);
+      key = unwrap_key(wcek, kek);
       expect(key.toString('hex')).toEqual(expect_key);
     });
   });

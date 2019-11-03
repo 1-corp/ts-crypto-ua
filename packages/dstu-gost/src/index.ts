@@ -3,7 +3,7 @@
 import { Gost } from './gost89';
 import { Hash } from './hash';
 import { dumb_kdf, pbkdf } from './util';
-import { unwrap, wrap } from './keywrap';
+import { unwrap_key, wrap_key } from './keywrap';
 import {
   algos,
   compute_hash,
@@ -26,8 +26,8 @@ module.exports = {
   gosthash: Hash.gosthash,
   dumb_kdf,
   pbkdf,
-  wrap_key: wrap,
-  unwrap_key: unwrap,
+  wrap_key,
+  unwrap_key,
   compat: {
     algos,
     decode_data,

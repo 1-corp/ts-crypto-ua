@@ -155,7 +155,7 @@ describe("Box", () => {
       );
     });
 
-    it("should unwrap be okay if right certificate is before wrong one (collision)", () => {
+    it("should unwrap_key be okay if right certificate is before wrong one (collision)", () => {
       const boxWithKey = new jk.Box({ algo });
       boxWithKey.load({ priv: privEnc40A0, cert: toCert });
       boxWithKey.load({ priv: privEncE54B, cert: certE54B });
@@ -165,7 +165,7 @@ describe("Box", () => {
       assert.deepEqual(content, Buffer.from("123"));
     });
 
-    it("should unwrap if both certificates are present", () => {
+    it("should unwrap_key if both certificates are present", () => {
       const boxWithKey = new jk.Box({ algo });
       boxWithKey.load({ priv: privEnc40A0, cert: toCert });
       boxWithKey.load({ cert: cert6929 });

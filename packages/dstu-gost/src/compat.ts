@@ -75,10 +75,10 @@ export const encode_data = (
 export const compute_hash = (contents: Buffer) => Hash.gosthash(contents);
 
 export const gost_unwrap = (kek: Buffer, inp: Buffer) =>
-  keywrap.unwrap(inp, kek);
+  keywrap.unwrap_key(inp, kek);
 
 export const gost_keywrap = (kek: Buffer, inp: Buffer, iv: Buffer) =>
-  keywrap.wrap(inp, kek, iv);
+  keywrap.wrap_key(inp, kek, iv);
 
 export const gost_kdf = (buffer: Buffer) => compute_hash(buffer);
 
