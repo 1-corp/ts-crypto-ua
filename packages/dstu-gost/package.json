@@ -47,7 +47,7 @@
     "verbose": true,
     "testRegex": ".spec.(j|t)s$",
     "coverageDirectory": "../coverage",
-    "testEnvironment": "jsdom"
+    "testEnvironment": "node"
   },
   "homepage": "https://github.com/1-corp/ts-crypto-ua/",
   "devDependencies": {
@@ -58,6 +58,7 @@
     "gts": "^1.1.0",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
+    "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
     "typescript": "~3.5.0"
   },
