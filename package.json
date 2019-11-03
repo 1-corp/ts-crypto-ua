@@ -1,0 +1,7 @@
+{
+  "name": "ts-crypto-ua",
+  "private": false,
+  "devDependencies": {
+    "lerna": "^3.18.3"
+  }
+}
