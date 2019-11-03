@@ -1,11 +1,18 @@
 {
   "name": "ts-dstu4145",
-  "version": "1.0.0",
-  "description": "TypeScript Only Ukrainian national EC cryptography (DSTU-4145) implementaion",
+  "version": "0.0.1",
+  "description": "Ukrainian national EC cryptography (DSTU-4145) TypeScript only implementaion",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --reporter spec ./test/test*.js",
-    "cover": "npx istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --timeout=10000"
+    "cover": "npx istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --timeout=10000",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
   },
   "repository": {
     "type": "git",
@@ -26,12 +33,13 @@
   "bugs": {
     "url": "https://github.com/1-corp/ts-crypto-ua/issues"
   },
-  "homepage": "https://github.com/1-corp/ts-crypto-ua/",
+  "homepage": "https://github.com/1-corp/ts-crypto-ua/packages/dstu4145",
   "devDependencies": {
     "gost89": "^0.1.11",
-    "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
-    "prettier": "^1.17.0"
+    "prettier": "^1.17.0",
+    "gts": "^1.1.0",
+    "typescript": "~3.5.0",
+    "@types/node": "^10.0.3"
   },
   "dependencies": {
     "asn1.js": ">= 0.4.0",
@@ -39,11 +47,5 @@
     "buffer": ">= 3.0",
     "jksreader": "^1.0.0",
     "js-lzma": "0.x"
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb",
-      "prettier"
-    ]
   }
 }
