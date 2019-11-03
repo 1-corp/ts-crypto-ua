@@ -15,7 +15,6 @@ export class Hash {
   private readonly H: Buffer;
   private readonly S: Buffer;
   private readonly buf: Buffer;
-  private mem: Buffer;
   private readonly ab2: Int32Array;
 
   constructor() {
@@ -35,12 +34,11 @@ export class Hash {
     this.S = hash_mem.slice(200, 232);
     this.buf = hash_mem.slice(232, 264);
 
-    this.mem = hash_mem;
     this.ab2 = new Int32Array(4);
   }
 
   private static swap_bytes(w: Buffer, k: Buffer) {
-    var i, j;
+    let i, j;
     for (i = 0; i < 4; i++) {
       for (j = 0; j < 8; j++) {
         k[i + 4 * j] = w[8 * i + j];
@@ -64,7 +62,7 @@ export class Hash {
 
   private static transform_3(data: Buffer) {
     let i;
-    let t16 =
+    const t16 =
       (data[0] ^ data[2] ^ data[4] ^ data[6] ^ data[24] ^ data[30]) |
       ((data[1] ^ data[3] ^ data[5] ^ data[7] ^ data[25] ^ data[31]) << 8);
 
@@ -181,7 +179,7 @@ export class Hash {
     return 1;
   }
 
-  public update(block: Buffer): void {
+  update(block: Buffer): void {
     if (this.left) {
       block = Buffer.concat([this.left, block]);
     }
@@ -200,14 +198,13 @@ export class Hash {
     }
   }
 
-  public update32(block32: Buffer) {
-
+  update32(block32: Buffer) {
     this.step(this.H, block32);
     this.add_blocks(32, this.S, block32);
     this.len += 32;
   }
 
-  public finish(hashval?: Buffer): Buffer {
+  finish(hashval?: Buffer): Buffer {
     const buf = this.buf;
     let fin_len = this.len;
     let idx = 0;
@@ -245,7 +242,7 @@ export class Hash {
     return hashval;
   }
 
-  public reset(): void {
+  reset(): void {
     let idx;
     for (idx = 0; idx < 32; idx++) {
       this.H[idx] = 0;

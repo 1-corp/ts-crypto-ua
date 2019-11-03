@@ -2,7 +2,7 @@
 
 import { Hash } from './hash';
 
-export const dumb_kdf = function(input: Buffer, n_passes: number): Buffer {
+export const dumb_kdf = (input: Buffer, n_passes: number): Buffer => {
   const ctx = new Hash();
   const hash = Buffer.alloc(32);
 
@@ -20,11 +20,7 @@ export const dumb_kdf = function(input: Buffer, n_passes: number): Buffer {
   return Buffer.from(hash);
 };
 
-export const pbkdf = function(
-  input: Buffer,
-  salt: Buffer,
-  iters: number
-): Buffer {
+export const pbkdf = (input: Buffer, salt: Buffer, iters: number): Buffer => {
   const hash = Buffer.alloc(32);
   const key = Buffer.alloc(32);
   const pw_pad36 = Buffer.alloc(32);

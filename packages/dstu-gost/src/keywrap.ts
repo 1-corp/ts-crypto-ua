@@ -1,18 +1,17 @@
 'use strict';
 
-import { Bytes } from './types';
 import { Gost } from './gost89';
 
 const WRAP_IV = Buffer.from([0x4a, 0xdd, 0xa2, 0x2c, 0x79, 0xe8, 0x21, 0x05]);
 
-export const wrap = function(cek: Buffer, kek: Buffer, iv: Buffer) {
+export const wrap = (cek: Buffer, kek: Buffer, iv: Buffer) => {
   let idx;
   const gost = new Gost();
   const cekicv = Buffer.alloc(40);
-  let temp2 = Buffer.alloc(44);
-  let temp3 = Buffer.alloc(48);
+  const temp2 = Buffer.alloc(44);
+  const temp3 = Buffer.alloc(48);
 
-  let icv = Buffer.alloc(cek.length);
+  const icv = Buffer.alloc(cek.length);
   gost.key(kek);
   gost.mac(32, cek, icv);
 
@@ -43,7 +42,7 @@ export const wrap = function(cek: Buffer, kek: Buffer, iv: Buffer) {
   return Buffer.from(result.slice(0, 44));
 };
 
-export const unwrap = function(wcek: Buffer, kek: Buffer) {
+export const unwrap = (wcek: Buffer, kek: Buffer) => {
   let idx, err;
   const gost = new Gost();
 

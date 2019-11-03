@@ -1,85 +1,85 @@
 'use strict';
 
-import { Bytes } from './types';
+import { Gost } from './gost89';
 
-const Gost = require('./gost89');
+export class PRNG {
+  private readonly counter: Buffer;
+  private readonly ctx: Gost;
+  private readonly I: Buffer;
+  private readonly X: Buffer;
 
-const PRNG = function(key: Bytes) {
-  const ctx = Gost.init();
-  const counter = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0]);
-  const I = new Uint8Array(8);
-  const X = new Uint8Array(8);
-  ctx.key(key);
+  constructor(key: Buffer) {
+    this.ctx = new Gost();
+    this.counter = Buffer.from([0, 0, 0, 0, 0, 0, 0, 0]);
+    this.I = Buffer.alloc(8);
+    this.X = Buffer.alloc(8);
+    this.ctx.key(key);
+  }
 
-  var increment = function() {
-    var idx,
-      zero = 0,
-      len = 8;
+  static seed(seed: Buffer): PRNG {
+    return new PRNG(seed);
+  }
+
+  next(bytes: number): Buffer {
+    let off = 0;
+    const rb = Buffer.alloc(bytes);
+    let step;
+    while (bytes > off) {
+      step = this.value();
+      step.copy(rb, off);
+      off += step.length;
+    }
+    return rb;
+  }
+
+  private increment(): void {
+    let idx;
+    let zero = 0;
+    const len = 8;
     for (idx = 0; idx < len; idx++) {
-      counter[idx]++;
-      if (counter[idx] > 0) {
+      this.counter[idx]++;
+      if (this.counter[idx] > 0) {
         break;
       }
 
       zero = idx - 1;
     }
     for (idx = 0; idx < zero; idx++) {
-      counter[idx] = 0;
+      this.counter[idx] = 0;
     }
-  };
+  }
 
-  var bit = function() {
-    var idx, ret;
-    ctx.crypt64(counter, I);
+  private bit(): Buffer {
+    let idx;
+    this.ctx.crypt64(this.counter, this.I);
     for (idx = 0; idx < 8; idx++) {
-      I[idx] ^= counter[idx];
+      this.I[idx] ^= this.counter[idx];
     }
-    ctx.crypt64(I, X);
-    ret = Buffer.from(X);
+    this.ctx.crypt64(this.I, this.X);
+
+    const ret = Buffer.from(this.X);
 
     for (idx = 0; idx < 8; idx++) {
-      X[idx] ^= I[idx];
+      this.X[idx] ^= this.I[idx];
     }
-    ctx.crypt64(X, counter);
+    this.ctx.crypt64(this.X, this.counter);
 
-    // @ts-ignore
-    increment(counter);
+    this.increment();
     return ret;
-  };
+  }
 
-  var value = function() {
-    var ret = Buffer.alloc(8);
-    var idx, bidx;
-    var step;
+  private value(): Buffer {
+    const ret = Buffer.alloc(8);
+    let idx, bidx;
+    let step;
 
     for (idx = 0; idx < 8; idx++) {
       for (bidx = 0; bidx < 8; bidx++) {
-        step = bit();
+        step = this.bit();
         ret[idx] |= (step[0] & 1) << bidx;
       }
     }
 
     return ret;
-  };
-
-  return {
-    next: function(bytes: Bytes) {
-      var off = 0;
-      var rb = Buffer.alloc(bytes);
-      var step;
-      while (bytes > off) {
-        step = value();
-        step.copy(rb, off);
-        off += step.length;
-      }
-      return rb;
-    },
-  };
-};
-
-PRNG.seed = function(seed: Bytes) {
-  // @ts-ignore
-  return new PRNG(seed);
-};
-
-module.exports = PRNG;
+  }
+}

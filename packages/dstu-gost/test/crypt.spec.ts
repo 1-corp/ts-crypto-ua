@@ -1,8 +1,8 @@
 import { Gost } from '../src/gost89';
 
-describe('Gost', function() {
-  describe('#crypt()', function() {
-    it('should encrypt multiply blocks', function() {
+describe('Gost', () => {
+  describe('#crypt()', () => {
+    it('should encrypt multiply blocks', () => {
       const expect_cypher = 'e393a17df2b6de6f2086d8230c277432';
 
       const ctx = new Gost();
@@ -20,8 +20,8 @@ describe('Gost', function() {
     });
   });
 
-  describe('#decrypt()', function() {
-    it('should decrypt multiply blocks', function() {
+  describe('#decrypt()', () => {
+    it('should decrypt multiply blocks', () => {
       const expect_clear = '0001020304050607f1f2f3f4f5f6f7f8';
 
       const ctx = new Gost();
@@ -39,8 +39,8 @@ describe('Gost', function() {
     });
   });
 
-  describe('#crypt_cfb()', function() {
-    it('should encrypt multiply blocks in CFB mode', function() {
+  describe('#crypt_cfb()', () => {
+    it('should encrypt multiply blocks in CFB mode', () => {
       const expect_c = '2087da2008227235a919d76142e8ce65';
 
       const ctx = new Gost();
@@ -59,8 +59,8 @@ describe('Gost', function() {
     });
   });
 
-  describe('#decrypt_cfb()', function() {
-    it('should decrypt multiply blocks in CFB mode', function() {
+  describe('#decrypt_cfb()', () => {
+    it('should decrypt multiply blocks in CFB mode', () => {
       const expect_clear = '0001020304050607f1f2f3f4f5f6f7f8';
 
       const ctext = Buffer.from('2087da2008227235a919d76142e8ce65', 'hex');

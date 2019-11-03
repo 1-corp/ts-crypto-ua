@@ -23,7 +23,7 @@ export class SBox {
     this.k2 = mem.subarray(96, 112);
     this.k1 = mem.subarray(112, 128);
 
-    var idx;
+    let idx;
 
     for (idx = 0; idx < mem.length; idx++) {
       mem[idx] = data[idx];
@@ -57,13 +57,13 @@ export class Gost {
       sbox = new SBox(sbox, mem.subarray(1032, 1160));
     }
     this.n = mem.subarray(1160, 1162);
-    this.gamma = new Uint8Array(8);
+    this.gamma = Buffer.alloc(8);
 
     this.boxinit(sbox);
   }
 
   private boxinit(sbox: SBox): void {
-    var i;
+    let i;
 
     for (i = 0; i < 256; i++) {
       this.k87[i] = ((sbox.k8[i >>> 4] << 4) | sbox.k7[i & 15]) << 24;
@@ -198,8 +198,8 @@ export class Gost {
   }
 
   decrypt64_cfb(iv: Uint8Array, ctext: Buffer, clear: Buffer): void {
-    var j;
-    var gamma = this.gamma;
+    let j;
+    const gamma = this.gamma;
 
     this.crypt64(iv, gamma);
     for (j = 0; j < 8; j++) {
@@ -208,22 +208,22 @@ export class Gost {
     }
   }
 
-  public crypt_cfb(iv: Uint8Array, clear: Buffer, out: Buffer): void {
-    let blocks = Math.ceil(clear.length / 8);
+  crypt_cfb(iv: Uint8Array, clear: Buffer, out: Buffer): void {
+    const blocks = Math.ceil(clear.length / 8);
     let idx;
     let off;
 
-    this.gamma = new Uint8Array(8);
-    const cur_iv = new Uint8Array(8);
+    this.gamma = Buffer.alloc(8);
+    const curIV = Buffer.alloc(8);
     for (idx = 0; idx < 8; idx++) {
-      cur_iv[idx] = iv[idx];
+      curIV[idx] = iv[idx];
     }
 
     idx = 0;
     while (idx < blocks) {
       off = idx++ * 8;
       this.crypt64_cfb(
-        cur_iv,
+        curIV,
         clear.slice(off, off + 8),
         out.slice(off, off + 8)
       );
@@ -233,22 +233,22 @@ export class Gost {
     }
   }
 
-  public decrypt_cfb(iv: Buffer, ctext: Buffer, out: Buffer): void {
-    let blocks = Math.ceil(ctext.length / 8);
+  decrypt_cfb(iv: Buffer, ctext: Buffer, out: Buffer): void {
+    const blocks = Math.ceil(ctext.length / 8);
     let idx;
     let off;
 
-    this.gamma = new Uint8Array(8);
-    const cur_iv = new Uint8Array(8);
+    this.gamma = Buffer.alloc(8);
+    const curIV = Buffer.alloc(8);
     for (idx = 0; idx < 8; idx++) {
-      cur_iv[idx] = iv[idx];
+      curIV[idx] = iv[idx];
     }
 
     idx = 0;
     while (idx < blocks) {
       off = idx++ * 8;
       this.decrypt64_cfb(
-        cur_iv,
+        curIV,
         ctext.slice(off, off + 8),
         out.slice(off, off + 8)
       );
@@ -258,8 +258,8 @@ export class Gost {
     }
   }
 
-  public crypt(clear: Buffer, out: Buffer): Buffer {
-    let blocks = Math.ceil(clear.length / 8);
+  crypt(clear: Buffer, out: Buffer): Buffer {
+    const blocks = Math.ceil(clear.length / 8);
     let off;
     let idx;
 
@@ -285,7 +285,7 @@ export class Gost {
     return out;
   }
 
-  public decrypt(cypher: Buffer, clear: Buffer): Buffer {
+  decrypt(cypher: Buffer, clear: Buffer): Buffer {
     let blocks = Math.ceil(cypher.length / 8);
     let off;
 
@@ -307,16 +307,16 @@ export class Gost {
     return clear;
   }
 
-  public key(k: Buffer): void {
+  key(k: Buffer): void {
     let i, j;
     for (i = 0, j = 0; i < 8; i++, j += 4) {
       this.k[i] = k[j] | (k[j + 1] << 8) | (k[j + 2] << 16) | (k[j + 3] << 24);
     }
   }
 
-  public mac(len: number, data: Buffer, out: Buffer) {
-    const buf = new Uint8Array(8);
-    const buf2 = new Uint8Array(8);
+  mac(len: number, data: Buffer, out: Buffer) {
+    const buf = Buffer.alloc(8);
+    const buf2 = Buffer.alloc(8);
 
     let i;
     for (i = 0; i + 8 <= data.length; i += 8) {

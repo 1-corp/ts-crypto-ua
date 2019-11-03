@@ -1,9 +1,9 @@
 import { dumb_kdf, pbkdf } from '../src/util';
 import { unwrap, wrap } from '../src/keywrap';
 
-describe('utils', function() {
-  describe('dumb_kdf()', function() {
-    it('should expand password into key', function() {
+describe('utils', () => {
+  describe('dumb_kdf()', () => {
+    it('should expand password into key', () => {
       const input = Buffer.from('123123', 'binary');
       const expect_key =
         '3709d09a3574045a52ee9ac65d6277282e065abc597ab0330bd275446230b6a6';
@@ -13,8 +13,8 @@ describe('utils', function() {
     });
   });
 
-  describe('pbkdf()', function() {
-    it('should expand password into key', function() {
+  describe('pbkdf()', () => {
+    it('should expand password into key', () => {
       const input = Buffer.from('password', 'binary');
       const salt = Buffer.from(
         '31a58dc1462981189cf6c701e276c7553a5ab5f6e36d8418e4aa40c930cf3876',
@@ -37,8 +37,8 @@ describe('utils', function() {
     });
   });
 
-  describe('key_wrap()', function() {
-    it('should wrap encryption key', function() {
+  describe('key_wrap()', () => {
+    it('should wrap encryption key', () => {
       const kek = Buffer.from(
         '9c6e6852023b46f499f25b9b0eb7027387fdd5650f5d638ee5f99eb8dc781fde',
         'hex'
@@ -57,8 +57,8 @@ describe('utils', function() {
     });
   });
 
-  describe('key_unwrap()', function() {
-    it('should unwrap encryption key', function() {
+  describe('key_unwrap()', () => {
+    it('should unwrap encryption key', () => {
       let wcek = Buffer.from(
         'e90fe95628e715f4d6f3d1151ded367250f7006648ffffde574a4ea38250c1c5a0fdff11f36d9186d3b27c60',
         'hex'
