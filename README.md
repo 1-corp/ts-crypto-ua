@@ -46,7 +46,8 @@ npm test
 
 ## Author
 
-The code is heavily based on [dstucrypt's](https://github.com/dstucrypt) work. Migration to Typescript, fixing of small issues, bring everything together and test thoroughly by [@Warchant](https://github.com/warchant).
+The code is heavily based on [dstucrypt's](https://github.com/dstucrypt) work. 
+Migrate to Typescript, fix small issues, bring everything together and thorough testing is done by [@Warchant](https://github.com/warchant).
 
 
 ## 🤝 Contributing

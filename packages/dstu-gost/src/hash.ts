@@ -251,13 +251,13 @@ export class Hash {
     this.left = null;
     this.len = 0;
   }
-
-  static gosthash(data: Buffer, ret?: Buffer): Buffer {
-    const ctx = new Hash();
-    ctx.update(data);
-    if (ret === undefined) {
-      ret = Buffer.alloc(32);
-    }
-    return Buffer.from(ctx.finish(ret));
-  }
 }
+
+export const gosthash = (data: Buffer, ret?: Buffer): Buffer => {
+  const ctx = new Hash();
+  ctx.update(data);
+  if (ret === undefined) {
+    ret = Buffer.alloc(32);
+  }
+  return Buffer.from(ctx.finish(ret));
+};

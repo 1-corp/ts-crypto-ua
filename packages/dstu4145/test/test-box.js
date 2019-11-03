@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-const gost89 = require("gost89");
+const gost89 = require("@1-corp/dstu-gost");
 const assert = require("assert");
 const fs = require("fs");
 const jk = require("../lib");
@@ -7,7 +7,7 @@ const jk = require("../lib");
 const NOT_RANDOM_32 = Buffer.from("12345678901234567890123456789012");
 
 global.crypto = {
-  // Moch random only for testing purposes.
+  // Mock random only for testing purposes.
   // SHOULD NOT BE USED IN REAL CODE.
   getRandomValues() {
     return NOT_RANDOM_32;

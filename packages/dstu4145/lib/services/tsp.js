@@ -1,6 +1,6 @@
 var rfc3161 = require("../spec/rfc3161-tsp");
 var Certificate = require("../models/Certificate");
-var gost89 = require("gost89");
+var gost89 = require("@1-corp/dstu-gost");
 var dstszi2010 = require("../spec/dstszi2010");
 
 function getStampCb(cert, hashedMessage, query, cb, errorCb) {

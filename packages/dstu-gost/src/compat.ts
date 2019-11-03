@@ -6,22 +6,21 @@ import {
   EncodedData,
   ConvertPasswordParsed,
 } from './types';
-
-const keywrap = require('./keywrap.js');
-const util = require('./util.js');
-const Gost = require('./gost89.js');
-const Hash = require('./hash.js');
-const dstu = require('./dstu.js');
+import { Gost } from './gost89';
+import { dumb_kdf, pbkdf } from './util';
+import { defaultSbox, packSbox } from './dstu';
+import { gosthash } from './hash';
+import { unwrap_key, wrap_key } from './keywrap';
 
 export const convert_password = (
   parsed: ConvertPasswordParsed,
   pw: Buffer
 ): Buffer => {
   if (parsed.format === 'IIT') {
-    return util.dumb_kdf(pw, 10000);
+    return dumb_kdf(pw, 10000);
   }
   if (parsed.format === 'PBES2') {
-    return util.pbkdf(pw, parsed.salt, parsed.iters);
+    return pbkdf(pw, parsed.salt, parsed.iters);
   }
 
   throw new Error('Failed to convert key');
@@ -30,7 +29,7 @@ export const convert_password = (
 export const decode_data = (parsed: ParsedData, pw: Buffer): Buffer => {
   let bkey;
 
-  const ctx = Gost.init();
+  const ctx = new Gost();
   let buf, obuf;
   bkey = convert_password(parsed, pw);
   ctx.key(bkey);
@@ -58,10 +57,10 @@ export const encode_data = (
   iv: Buffer,
   salt: Buffer
 ): EncodedData => {
-  const ctx = Gost.init();
+  const ctx = new Gost();
   if (format === 'PBES2') {
     const iters = 10000;
-    const sbox = dstu.packSbox(dstu.defaultSbox);
+    const sbox = packSbox(defaultSbox);
     const bkey = convert_password({ iters, salt, format }, pw);
     ctx.key(bkey);
     const obuf = Buffer.alloc(raw.length);
@@ -72,23 +71,26 @@ export const encode_data = (
   throw new Error('failed to encode data');
 };
 
-export const compute_hash = (contents: Buffer) => Hash.gosthash(contents);
+export const compute_hash = (contents: Buffer) => gosthash(contents);
 
-export const gost_unwrap = (kek: Buffer, inp: Buffer) =>
-  keywrap.unwrap_key(inp, kek);
+export const gost_unwrap = (kek: Buffer, inp: Buffer) => unwrap_key(inp, kek);
 
 export const gost_keywrap = (kek: Buffer, inp: Buffer, iv: Buffer) =>
-  keywrap.wrap_key(inp, kek, iv);
+  wrap_key(inp, kek, iv);
 
 export const gost_kdf = (buffer: Buffer) => compute_hash(buffer);
 
 const gost_crypt = (mode: number, inp: Buffer, key: Buffer, iv: Buffer) => {
-  const ctx = Gost.init();
+  const ctx = new Gost();
+  const ret = Buffer.alloc(inp.length);
+
   ctx.key(key);
   if (mode) {
-    return ctx.decrypt_cfb(iv, inp);
+    ctx.decrypt_cfb(iv, inp, ret);
+    return ret;
   } else {
-    return ctx.crypt_cfb(iv, inp);
+    ctx.crypt_cfb(iv, inp, ret);
+    return ret;
   }
 };
 

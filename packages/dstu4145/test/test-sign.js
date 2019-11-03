@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-const gost89 = require("gost89");
+const gost89 = require("@1-corp/dstu-gost");
 const assert = require("assert");
 const fs = require("fs");
 

@@ -1,5 +1,3 @@
-import { SBox } from './gost89';
-
 export const Buffer = require('buffer').Buffer;
 
 export interface EncodedData {
@@ -8,7 +6,7 @@ export interface EncodedData {
   salt: Buffer;
   iters: number;
   body: Buffer;
-  sbox: SBox;
+  sbox: Buffer;
 }
 
 export interface ConvertPasswordParsed {

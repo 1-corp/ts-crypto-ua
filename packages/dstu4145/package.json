@@ -1,5 +1,5 @@
 {
-  "name": "dstu4145",
+  "name": "@1-corp/dstu4145",
   "version": "0.0.1",
   "description": "Ukrainian national EC cryptography (DSTU-4145) TypeScript only implementaion",
   "main": "lib/index.js",
@@ -8,9 +8,7 @@
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
-    "fix": "gts fix",
-    "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "fix": "gts fix"
   },
   "repository": {
     "type": "git",
@@ -31,6 +29,28 @@
   "bugs": {
     "url": "https://github.com/1-corp/ts-crypto-ua/issues"
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "roots": [
+      "test"
+    ],
+    "rootDir": ".",
+    "transformIgnorePatterns": [
+      "node_modules/.*",
+      ".*\\.js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "verbose": true,
+    "testRegex": ".(j|t)s$",
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
   "homepage": "https://github.com/1-corp/ts-crypto-ua/packages/dstu4145",
   "dependencies": {
     "asn1.js": ">= 0.4.0",
@@ -38,12 +58,6 @@
     "buffer": ">= 3.0",
     "jksreader": "^1.0.0",
     "js-lzma": "0.x",
-    "@1-corp/dstu-gost": "^0.0.1"
-  },
-  "devDependencies": {
-    "prettier": "^1.17.0",
-    "gts": "^1.1.0",
-    "typescript": "~3.5.0",
-    "@types/node": "^10.0.3"
+    "@1-corp/dstu-gost": "*"
   }
 }

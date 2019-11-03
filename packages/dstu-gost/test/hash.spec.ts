@@ -1,4 +1,4 @@
-import { Hash } from '../src/hash';
+import { gosthash, Hash } from '../src/hash';
 
 describe('Hash', () => {
   describe('#gosthash()', () => {
@@ -6,7 +6,7 @@ describe('Hash', () => {
       const input1 = Buffer.from('12345678901234567890123456789011', 'binary');
       const expect_ret1 =
         '7686f3f4b113aadc97bca9ea054f41821f0676c5c28ffb987e41797a568e1ed4';
-      const ret1 = Hash.gosthash(input1);
+      const ret1 = gosthash(input1);
       expect(ret1.toString('hex')).toEqual(expect_ret1);
     });
 
@@ -18,7 +18,7 @@ describe('Hash', () => {
       const expect_ret2 =
         '811cb06a8ee423182d9cc9d281f783908f4cfbaf47a68be8415d3499674a3063';
 
-      const ret2 = Hash.gosthash(input2);
+      const ret2 = gosthash(input2);
       expect(ret2.toString('hex')).toEqual(expect_ret2);
     });
 
@@ -26,7 +26,7 @@ describe('Hash', () => {
       const expect_ret =
         '34d4da2c04e9c1ceb933282069c864617d94ed7cc5c0a9840c0c1a99629df637';
       const input = Buffer.from('123123', 'binary');
-      const ret = Hash.gosthash(input);
+      const ret = gosthash(input);
       expect(ret.toString('hex')).toEqual(expect_ret);
     });
 
@@ -46,7 +46,7 @@ describe('Hash', () => {
         'e9312d13d0e0d39aa4a00c77dcfb661883dd0ed8218af48a146168fc60f014dc';
       const input =
         'IGNORE THIS FILE. This file does nothing, contains no useful data, and might go away in future releases.  Do not depend on this file or its contents.';
-      const ret = Hash.gosthash(Buffer.from(input, 'binary'));
+      const ret = gosthash(Buffer.from(input, 'binary'));
       expect(ret.toString('hex')).toEqual(expect_ret);
     });
   });

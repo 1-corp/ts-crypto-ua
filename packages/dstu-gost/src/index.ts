@@ -1,7 +1,7 @@
 'use strict';
 
 import { Gost } from './gost89';
-import { Hash } from './hash';
+import { gosthash, Hash } from './hash';
 import { dumb_kdf, pbkdf } from './util';
 import { unwrap_key, wrap_key } from './keywrap';
 import {
@@ -23,7 +23,7 @@ module.exports = {
   },
   PRNG,
   Hash,
-  gosthash: Hash.gosthash,
+  gosthash,
   dumb_kdf,
   pbkdf,
   wrap_key,
