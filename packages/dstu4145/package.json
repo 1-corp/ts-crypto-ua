@@ -4,6 +4,7 @@
   "description": "Ukrainian national EC cryptography (DSTU-4145) TypeScript only implementaion",
   "main": "lib/index.js",
   "scripts": {
+    "audit": "yarn audit",
     "test": "jest",
     "check": "gts check",
     "clean": "gts clean",
@@ -53,11 +54,11 @@
   },
   "homepage": "https://github.com/1-corp/ts-crypto-ua/packages/dstu4145",
   "dependencies": {
+    "@1-corp/dstu-gost": "file:../dstu-gost",
+    "@1-corp/jksreader": "file:../jksreader",
     "asn1.js": ">= 0.4.0",
     "bn.js": ">= 0.14",
     "buffer": ">= 3.0",
-    "jksreader": "^1.0.0",
-    "js-lzma": "0.x",
-    "@1-corp/dstu-gost": "*"
+    "js-lzma": "0.x"
   }
 }

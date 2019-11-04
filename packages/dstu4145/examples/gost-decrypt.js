@@ -1,5 +1,5 @@
-var jk = require('../lib/index.js'),
-    gost89 = require('gost89');
+var jk = require('../lib/index.js');
+const gost89 = require('@1-corp/dstu-gost');
 
 // keys used
 reciever_priv = jk.pkey('DSTU_PB_257', '171b130e180d060f1f1a0807011816170f060b040a10121817111a0d0b0b0f03');

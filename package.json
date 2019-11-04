@@ -6,6 +6,7 @@
   "repository": "github:1-corp/ts-crypto-ua",
   "scripts": {
     "compile": "npx lerna run compile",
+    "packages-audit": "npx lerna run audit",
     "lint": "npx lerna run lint",
     "test": "npx lerna run test",
     "test:cov": "npx lerna run test:cov",
@@ -26,5 +27,10 @@
     "ts-jest": "^24.1.0",
     "tslint": "^6.0.0-beta0",
     "typescript": "~3.5.0"
+  },
+  "dependencies": {
+    "@1-corp/dstu-gost": "file:packages/dstu-gost",
+    "@1-corp/dstu4145": "file:packages/dstu4145",
+    "jksreader": "file:packages/jksreader"
   }
 }

@@ -20,7 +20,7 @@ var jk = require('../curve.js'),
 var gost_salt = function (ukm) {
     return dstszi2010.SharedInfo.encode({
         "keyInfo": {
-            "algorithm": "Gost28147-cfb-wrap_key",
+            "algorithm": "Gost28147-cfb-wrap",
             "parameters": null,
         },
         "entityInfo": ukm || undefined,

@@ -13,6 +13,15 @@ Monorepo for crypto primitives used in Ukrainian national crypto.
 
 ## Packages
 
+### [@1-corp/jksreader](./packages/jksreader)
+
+Utility package to read JKS storage (PrivatBank uses it to store private keys and certs).
+
+```sh
+npm install @1-corp/jksreader
+```
+
+
 ### [@1-corp/dstu-gost](./packages/dstu-gost)
 
 National hash and encryption algorithms.
@@ -47,7 +56,7 @@ npm test
 ## Author
 
 The code is heavily based on [dstucrypt's](https://github.com/dstucrypt) work. 
-Migrate to Typescript, fix small issues, bring everything together and thorough testing is done by [@Warchant](https://github.com/warchant).
+[@Warchant](https://github.com/warchant) migrated code to Typescript and fixed small issues.
 
 
 ## 🤝 Contributing

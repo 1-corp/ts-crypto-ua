@@ -20,7 +20,7 @@ var ALGORITHMS_IDS = {
     "1 2 804 2 1 1 1 1 2 1": "Gost34311",
     '1 2 804 2 1 1 1 1 1 1 3': "Gost28147-cfb",
     '1 2 804 2 1 1 1 1 3 4': 'dhSinglePass-cofactorDH-gost34311kdf',
-    "1 2 804 2 1 1 1 1 1 1 5": "Gost28147-cfb-wrap_key",
+    "1 2 804 2 1 1 1 1 1 1 5": "Gost28147-cfb-wrap",
     '1 2 804 2 1 1 1 1 1 2': "Gost34311-hmac",
     '1 2 804 2 1 1 1 1 3 1 1': "Dstu4145le",
     '1 2 840 10045 2 1': 'ECDSA',

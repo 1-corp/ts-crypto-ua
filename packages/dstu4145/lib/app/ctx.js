@@ -1,4 +1,4 @@
-const jksreader = require("jksreader");
+const jksreader = require("@1-corp/jksreader");
 
 const fs = require("fs");
 const Priv = require("../models/Priv");

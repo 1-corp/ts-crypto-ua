@@ -1,34 +1,27 @@
 {
-  "name": "@1-corp/dstu-gost",
+  "name": "@1-corp/jksreader",
   "version": "0.0.1",
-  "description": "gost28147-89 in TS",
+  "description": "JKS format decoder",
   "main": "build/src/index.js",
   "scripts": {
-    "audit": "yarn audit",
-    "build": "yarn compile",
+    "build": "tsc",
     "test": "jest",
-    "test:cov": "jest --coverage",
-    "lint": "eslint src/*.js",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
-    "pretest": "yarn compile",
-    "fix": "gts fix"
+    "fix": "gts fix",
+    "prepare": "yarn run compile",
+    "pretest": "yarn run compile",
+    "posttest": "yarn run check"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/1-corp/ts-crypto-ua.git"
-  },
-  "keywords": [
-    "gost89"
-  ],
   "author": "Bohdan Vanieiev",
   "contributors": [
     "Ilya Petrov"
   ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/1-corp/ts-crypto-ua/packages/dstu-gost"
+  "dependencies": {
+    "buffer": "^5.4.3",
+    "js-sha1": "^0.6.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -52,8 +45,12 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "homepage": "https://github.com/1-corp/ts-crypto-ua/",
-  "dependencies": {
-    "buffer": ">= 3.0"
+  "keywords": [
+    "dstu4145",
+    "ukraine"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1-corp/ts-crypto-ua"
   }
 }

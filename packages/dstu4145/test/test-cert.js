@@ -208,7 +208,7 @@ describe('Certificate', () => {
 
     it('should serialize back', () => {
       const der = cert.to_asn1();
-      assert.deepEqual(der, data);
+      expect(der).toEqual(data);
     });
 
     it('should make issuer rdn', () => {
