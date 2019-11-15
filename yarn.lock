@@ -10,12 +10,18 @@
 "@1-corp/dstu4145@file:packages/dstu4145":
   version "0.0.1"
   dependencies:
-    "@1-corp/dstu-gost" "file:../../Library/Caches/Yarn/v6/npm-@1-corp-dstu4145-0.0.1-0a4f4e8b-eb3e-42f2-a52e-1efc14fd5d8d-1572871199993/node_modules/@1-corp/dstu-gost"
+    "@1-corp/dstu-gost" "file:packages/dstu-gost"
+    "@1-corp/jksreader" "file:packages/jksreader"
     asn1.js ">= 0.4.0"
     bn.js ">= 0.14"
     buffer ">= 3.0"
-    jksreader "^1.0.0"
     js-lzma "0.x"
+
+"@1-corp/jksreader@file:packages/jksreader":
+  version "0.0.1"
+  dependencies:
+    buffer "^5.4.3"
+    js-sha1 "^0.6.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -2667,13 +2673,6 @@ jest@^24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-jksreader@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/jksreader/-/jksreader-1.0.0.tgz#f40946ff1f758c540ef701452c37cfa28d2a4fe8"
-  integrity sha512-fSZ64WyfAXHoaE3J5opHh7DSCL3Kfy3CzRkLX2Kz9kmHUa8DrnrQKPhBgi2mapGu7SUwuzgCw/xPtGzZj4pWgQ==
-  dependencies:
-    js-sha1 "^0.6.0"
-
 "jksreader@file:packages/jksreader":
   version "0.0.1"
   dependencies:
@@ -4530,10 +4529,10 @@ type-fest@^0.5.2:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.5.2.tgz#d6ef42a0356c6cd45f49485c3b6281fc148e48a2"
   integrity sha512-DWkS49EQKVX//Tbupb9TFa19c7+MK1XmzkrZUR8TAktmE/DizXoaoJV6TZ/tSIPXipqNiRI6CyAe7x69Jb6RSw==
 
-typescript@~3.5.0:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+typescript@~3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
+  integrity sha512-ml7V7JfiN2Xwvcer+XAf2csGO1bPBdRbFCkYBczNZggrBZ9c7G3riSUeJmqEU5uOtXNPMhE3n+R4FA/3YOAWOQ==
 
 uglify-js@^3.1.4:
   version "3.6.7"
