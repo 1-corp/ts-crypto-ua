@@ -10,12 +10,18 @@
 "@1-corp/dstu4145@file:packages/dstu4145":
   version "0.0.1"
   dependencies:
-    "@1-corp/dstu-gost" "file:../../Library/Caches/Yarn/v6/npm-@1-corp-dstu4145-0.0.1-0a4f4e8b-eb3e-42f2-a52e-1efc14fd5d8d-1572871199993/node_modules/@1-corp/dstu-gost"
+    "@1-corp/dstu-gost" "file:packages/dstu-gost"
+    "@1-corp/jksreader" "file:packages/jksreader"
     asn1.js ">= 0.4.0"
     bn.js ">= 0.14"
     buffer ">= 3.0"
-    jksreader "^1.0.0"
     js-lzma "0.x"
+
+"@1-corp/jksreader@file:packages/jksreader":
+  version "0.0.1"
+  dependencies:
+    buffer "^5.4.3"
+    js-sha1 "^0.6.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -2667,13 +2673,6 @@ jest@^24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-jksreader@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/jksreader/-/jksreader-1.0.0.tgz#f40946ff1f758c540ef701452c37cfa28d2a4fe8"
-  integrity sha512-fSZ64WyfAXHoaE3J5opHh7DSCL3Kfy3CzRkLX2Kz9kmHUa8DrnrQKPhBgi2mapGu7SUwuzgCw/xPtGzZj4pWgQ==
-  dependencies:
-    js-sha1 "^0.6.0"
-
 "jksreader@file:packages/jksreader":
   version "0.0.1"
   dependencies:
@@ -3586,9 +3585,9 @@ prepend-http@^2.0.0:
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
 prettier@^1.15.3, prettier@^1.17.0:
-  version "1.18.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
-  integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
+  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
 
 pretty-format@^24.9.0:
   version "24.9.0"
