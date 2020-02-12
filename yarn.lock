@@ -10,12 +10,18 @@
 "@1-corp/dstu4145@file:packages/dstu4145":
   version "0.0.1"
   dependencies:
-    "@1-corp/dstu-gost" "file:../../Library/Caches/Yarn/v6/npm-@1-corp-dstu4145-0.0.1-0a4f4e8b-eb3e-42f2-a52e-1efc14fd5d8d-1572871199993/node_modules/@1-corp/dstu-gost"
+    "@1-corp/dstu-gost" "file:packages/dstu-gost"
+    "@1-corp/jksreader" "file:packages/jksreader"
     asn1.js ">= 0.4.0"
     bn.js ">= 0.14"
     buffer ">= 3.0"
-    jksreader "^1.0.0"
     js-lzma "0.x"
+
+"@1-corp/jksreader@file:packages/jksreader":
+  version "0.0.1"
+  dependencies:
+    buffer "^5.4.3"
+    js-sha1 "^0.6.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -385,10 +391,10 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/node@^10.0.3":
-  version "10.17.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.3.tgz#65a8d9a6a0f6af55595a2d0020617959130d6495"
-  integrity sha512-QZ9CjUB3QoA3f2afw3utKlfRPhpmufB7jC2+oDhLWnXqoyx333fhKSQDLQu2EK7OE0a15X67eYiRAaJsHXrpMA==
+"@types/node@^13.7.1":
+  version "13.7.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.7.1.tgz#238eb34a66431b71d2aaddeaa7db166f25971a0d"
+  integrity sha512-Zq8gcQGmn4txQEJeiXo/KiLpon8TzAl0kmKH4zdWctPj05nWwp1ClMdAVEloqrQKfaC48PNLdgN/aVaLqUrluA==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -2666,13 +2672,6 @@ jest@^24.9.0:
   dependencies:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
-
-jksreader@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/jksreader/-/jksreader-1.0.0.tgz#f40946ff1f758c540ef701452c37cfa28d2a4fe8"
-  integrity sha512-fSZ64WyfAXHoaE3J5opHh7DSCL3Kfy3CzRkLX2Kz9kmHUa8DrnrQKPhBgi2mapGu7SUwuzgCw/xPtGzZj4pWgQ==
-  dependencies:
-    js-sha1 "^0.6.0"
 
 "jksreader@file:packages/jksreader":
   version "0.0.1"
