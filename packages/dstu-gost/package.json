@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "gost28147-89 in TS",
   "main": "build/src/index.js",
+  "files": [
+    "build/src/*"
+  ],
   "scripts": {
     "audit": "yarn audit",
     "build": "yarn compile",
@@ -54,6 +57,6 @@
   },
   "homepage": "https://github.com/1-corp/ts-crypto-ua/",
   "dependencies": {
-    "buffer": ">= 3.0"
+    "buffer": ">=5.5"
   }
 }

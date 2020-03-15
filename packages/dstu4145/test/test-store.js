@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const fs = require('fs');
 const gost89 = require('@1-corp/dstu-gost');
-const algos = gost89.compat.algos();
+const algo = gost89.compat.algos();
 
 const jk = require('../lib/index.js');
 const pbes2 = require('../lib/spec/pbes.js');

@@ -276,27 +276,26 @@ describe('Box', () => {
 
     it('should sign message with signing key', done => {
       boxWithKey
-        .pipe(
-          Buffer.from('123'),
-          [{ op: 'sign', time }],
-          {}
-        )
+        .pipe(Buffer.from('123'), [{ op: 'sign', time }], {})
         .then(data =>
           expect(data).toEqual(fs.readFileSync(`${__dirname}/data/message.p7`))
         )
-        .then(done);
+        .then(done)
+        .catch(e => {
+          throw e;
+        });
     });
 
     it('should sign message with signing key (async)', done => {
       boxWithKey
-        .pipe(
-          Buffer.from('123'),
-          [{ op: 'sign', time }]
-        )
+        .pipe(Buffer.from('123'), [{ op: 'sign', time }])
         .then(data => {
           expect(data).toEqual(fs.readFileSync(`${__dirname}/data/message.p7`));
         })
-        .then(done);
+        .then(done)
+        .catch(e => {
+          throw e;
+        });
     });
   });
 
@@ -306,20 +305,13 @@ describe('Box', () => {
 
     it('should throw if receipient not specified', () => {
       expect(() =>
-        boxWithKey.pipe(
-          Buffer.from('123'),
-          [{ op: 'encrypt' }],
-          {}
-        )
+        boxWithKey.pipe(Buffer.from('123'), [{ op: 'encrypt' }], {})
       ).toThrow(/No recipient specified for encryption/);
     });
 
     it('should encrypt message with encryption key', done => {
       boxWithKey
-        .pipe(
-          Buffer.from('123'),
-          [{ op: 'encrypt', forCert: toCert }]
-        )
+        .pipe(Buffer.from('123'), [{ op: 'encrypt', forCert: toCert }])
         .then(data =>
           expect(data).toEqual(
             fs.readFileSync(`${__dirname}/data/enc_message.p7`)
@@ -345,10 +337,7 @@ describe('Box', () => {
 
     it('should encrypt message with encryption key (async)', done => {
       boxWithKey
-        .pipe(
-          Buffer.from('123'),
-          [{ op: 'encrypt', forCert: toCert }]
-        )
+        .pipe(Buffer.from('123'), [{ op: 'encrypt', forCert: toCert }])
         .then(data =>
           expect(data).toEqual(
             fs.readFileSync(`${__dirname}/data/enc_message.p7`)

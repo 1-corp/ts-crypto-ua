@@ -8,7 +8,6 @@
     "test": "jest",
     "check": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
     "fix": "gts fix"
   },
   "repository": {
@@ -56,9 +55,9 @@
   "dependencies": {
     "@1-corp/dstu-gost": "file:../dstu-gost",
     "@1-corp/jksreader": "file:../jksreader",
-    "asn1.js": ">= 0.4.0",
-    "bn.js": ">= 0.14",
-    "buffer": ">= 3.0",
+    "asn1.js": ">=5.3.0",
+    "bn.js": ">=5.1",
+    "buffer": ">=5.5",
     "js-lzma": "0.x"
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 import { Hash } from './hash';
 
 export const dumb_kdf = (input: Buffer, n_passes: number): Buffer => {

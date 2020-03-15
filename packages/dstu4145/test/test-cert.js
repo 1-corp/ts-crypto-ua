@@ -43,25 +43,23 @@ describe('Certificate', () => {
       expect(Buffer.from(cert.curve.mod_bits)).toEqual(
         Buffer.from([257, 12, 0])
       );
-      expect(cert.pk_data).toEqual([
-        '0x2c157a5f',
-        '0x17857f3c',
-        '0xee0ce4a5',
-        '0xbf03a3b',
-        '0xcb31f667',
-        '0x71224a5',
-        '0x31401ac',
-        '0xcae8dae1',
-        '0x1',
-      ]);
+      expect(cert.pk_data[0]).toEqual(0x2c157a5f);
+      expect(cert.pk_data[1]).toEqual(0x17857f3c);
+      expect(cert.pk_data[2]).toEqual(0xee0ce4a5);
+      expect(cert.pk_data[3]).toEqual(0xbf03a3b);
+      expect(cert.pk_data[4]).toEqual(0xcb31f667);
+      expect(cert.pk_data[5]).toEqual(0x71224a5);
+      expect(cert.pk_data[6]).toEqual(0x31401ac);
+      expect(cert.pk_data[7]).toEqual(0xcae8dae1);
+      expect(cert.pk_data[8]).toEqual(0x1);
       expect(cert.valid.from).toEqual(1478124000000); // UTCTime 2016-11-02 22:00:00 UTC
       expect(cert.valid.to).toEqual(1541196000000); // UTCTime 2018-11-02 22:00:00 UTC
-      expect(cert.serial).toEqual(
-        295234990915418097076372072606219913778474207744
+      expect(cert.serial.toString()).toEqual(
+        '295234990915418097076372072606219913778474207744'
       );
       expect(cert.signatureAlgorithm).toEqual('Dstu4145le');
       expect(cert.pubkeyAlgorithm).toEqual('Dstu4145le');
-      expect(cert.extension.ipn.DRFO).toEqual(null);
+      expect(cert.extension.ipn.DRFO).toEqual(undefined);
       expect(cert.extension.ipn.EDRPOU).toEqual('39292197');
 
       expect(cert.subject.commonName).toEqual(
@@ -322,12 +320,12 @@ describe('Certificate', () => {
 
       expect(cert.valid.from).toEqual(1514314260000); // 2017-12-26 18:51:00
       expect(cert.valid.to).toEqual(1672080660000); // 2022-12-26 18:51:00
-      expect(cert.serial).toEqual(
-        57595595825646241314308569398321717626221363200
+      expect(cert.serial.toString()).toEqual(
+        '57595595825646241314308569398321717626221363200'
       );
       expect(cert.signatureAlgorithm).toEqual('ECDSA-SHA256');
       expect(cert.pubkeyAlgorithm).toEqual('ECDSA');
-      expect(cert.extension.ipn).toEqual(null);
+      expect(cert.extension.ipn).toEqual(undefined);
 
       expect(cert.subject.commonName).toEqual('CA of the Justice of Ukraine');
       expect(cert.subject.organizationName).toEqual('State enterprise "NAIS"');
