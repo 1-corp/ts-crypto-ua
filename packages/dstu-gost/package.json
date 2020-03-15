@@ -11,7 +11,6 @@
     "build": "yarn compile",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "lint": "eslint src/*.js",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",

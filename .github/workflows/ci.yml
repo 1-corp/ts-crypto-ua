@@ -28,6 +28,5 @@ jobs:
       - run: yarn test:cov
       - name: codecov
         run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
-      - run: yarn lint
 
 
