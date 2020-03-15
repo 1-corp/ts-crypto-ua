@@ -1,18 +1,18 @@
 /* eslint-disable camelcase,no-underscore-dangle,no-bitwise */
-const bn = require("asn1.js").bignum;
+const bn = require('asn1.js').bignum;
 
-const Field = require("./field.js");
-const wnaf = require("./wnaf/index.js");
-const Priv = require("./models/Priv.js");
-const Pub = require("./models/Pub");
-const standard = require("./standard.js");
-const util = require("./util.js");
-const random = require("./rand.js");
-const Point = require("./point.js");
+const Field = require('./field.js');
+const wnaf = require('./wnaf/index.js');
+const Priv = require('./models/Priv.js');
+const Pub = require('./models/Pub');
+const standard = require('./standard.js');
+const util = require('./util.js');
+const random = require('./rand.js');
+const Point = require('./point.js');
 
 const H = util.maybeHex;
 
-function fsquad_odd(value, curve) {
+function fsquadOdd(value, curve) {
   const bitl_m = curve.m;
   const range_to = (bitl_m - 1) / 2;
   const val_a = value.mod();
@@ -31,47 +31,77 @@ function fsquad_odd(value, curve) {
     return val_z;
   }
 
-  throw new Error("squad eq fail");
+  throw new Error('squad eq fail');
 }
 
 function fsquad(value, curve) {
   let ret;
   if (curve.modulus.testBit(0)) {
-    ret = fsquad_odd(value, curve);
+    ret = fsquadOdd(value, curve);
   } else {
-    throw new Error("only odd modulus is supported :(");
+    throw new Error('only odd modulus is supported :(');
   }
 
   return ret.mod();
 }
 
-class Curve {
-  static resolve(def, fmt) {
-    if (def.type === "params") {
+export interface CurveParams {
+  m: any;
+  ks: any;
+  a: any[];
+  b: any;
+  order: any;
+  kofactor: number[];
+  base: any;
+}
+
+export interface CurveDef {
+  type: 'params' | 'id';
+  value: ;
+}
+
+export class Curve {
+  private expand_cache: {};
+  private modTmp: Uint32Array;
+  private inv_tmp1: Uint32Array;
+  private inv_tmp2: Uint32Array;
+  private order: Field;
+  private kofactor: Field;
+  private param_a: Field;
+  private param_b: Field;
+  private mod_words: number;
+  private zero: Field;
+  private one: Field;
+  private modulus: Field;
+  private ks: number[];
+  private m: number;
+
+  static resolve(def: CurveDef, fmt: string) {
+    if (def.type === 'params') {
       return Curve.from_asn1(def.value, fmt);
     }
-    if (def.type === "id") {
+    if (def.type === 'id') {
       return Curve.from_id(def.value);
     }
-    throw new Error("Unknown type", def.type);
+    throw new Error(`Unknown type ${def.type}`);
   }
 
-  static from_id(curve_name) {
-    if (standard.cache[curve_name]) {
-      return standard.cache[curve_name];
+  static from_id(curveName: string) {
+    if (standard.cache[curveName]) {
+      return standard.cache[curveName];
     }
 
-    if (!standard[curve_name]) {
-      throw new Error("Curve with such name was not defined");
+    if (!standard[curveName]) {
+      throw new Error('Curve with such name was not defined');
     }
-    const curve = new Curve(standard[curve_name]);
-    standard.cache[curve_name] = curve;
+    const curve = new Curve(standard[curveName]);
+    standard.cache[curveName] = curve;
 
     return curve;
   }
 
-  static from_asn1(curve, fmt) {
-    const big = fmt === "cert" ? util.BIG_LE : util.BIG_BE;
+  static from_asn1(curve, fmt: string) {
+    const big = fmt === 'cert' ? util.BIG_LE : util.BIG_BE;
 
     return new Curve({
       m: curve.p.param_m,
@@ -80,55 +110,53 @@ class Curve {
       b: big(curve.param_b),
       order: util.BIG_BE(curve.order.toArray()),
       kofactor: [2],
-      base: big(curve.bp)
+      base: big(curve.bp),
     });
   }
 
   static ks_parse(ks) {
-    if (ks.type === "trinominal") {
+    if (ks.type === 'trinominal') {
       return [ks.value];
     }
     return [ks.value.k1, ks.value.k2, ks.value.k3];
   }
 
-  constructor(params) {
+  constructor(params: CurveParams) {
     this.expand_cache = {};
 
-    const mod_words = Math.ceil(params.m / 32);
+    const modWords = Math.ceil(params.m / 32);
 
-    this.mod_tmp = new Uint32Array(mod_words + mod_words + 4);
-    this.inv_tmp1 = new Uint32Array(mod_words);
-    this.inv_tmp2 = new Uint32Array(mod_words);
-    this.order = H(params.order, mod_words);
-    this.kofactor = H(params.kofactor);
-    this.param_a = H(params.a, mod_words);
-    this.param_b = H(params.b, mod_words);
-    this.m = (typeof params.m === 'number') ? params.m : params.m.toNumber();
+    this.modTmp = new Uint32Array(modWords + modWords + 4);
+    this.inv_tmp1 = new Uint32Array(modWords);
+    this.inv_tmp2 = new Uint32Array(modWords);
+    this.param_a = H(params.a, modWords);
+    this.param_b = H(params.b, modWords);
+    this.m = typeof params.m === 'number' ? params.m : params.m.toNumber();
     this.ks = params.ks;
-    this.mod_words = mod_words;
-    this.zero = new Field([0], "buf32", this);
-    this.one = new Field("1", "hex", this);
+    this.mod_words = modWords;
+    this.zero = new Field([0], 'buf32', this);
+    this.one = new Field('1', 'hex', this);
     this.modulus = this.comp_modulus(params.m, params.ks);
     this.mod_bits = new Uint32Array([this.m].concat(this.ks, [0]));
-    this.param_a = new Field(this.param_a, "buf32", this);
-    this.param_b = new Field(this.param_b, "buf32", this);
+    this.param_a = new Field(H(params.a, modWords), 'buf32', this);
+    this.param_b = new Field(H(params.b, modWords), 'buf32', this);
     this.a = this.param_a;
     this.b = this.param_b;
-    this.order = new Field(this.order, "buf32", this);
-    this.kofactor = new Field(this.kofactor, "buf32", this);
+    this.order = new Field(H(params.order, modWords), 'buf32', this);
+    this.kofactor = new Field(H(params.kofactor), 'buf32', this);
 
     let base_x;
     let base_y;
     if (params.base.x === undefined) {
-      ({ x: base_x, y: base_y } = this.expand(H(params.base, mod_words)));
+      ({ x: base_x, y: base_y } = this.expand(H(params.base, modWords)));
     } else {
-      base_x = H(params.base.x, mod_words);
-      base_y = H(params.base.y, mod_words);
+      base_x = H(params.base.x, modWords);
+      base_y = H(params.base.y, modWords);
     }
     this.set_base(base_x, base_y);
   }
 
-  comp_modulus(m, ks) {
+  comp_modulus(m: number, ks: number[]) {
     let modulus = this.one;
     modulus = modulus.setBit(m);
     for (let i = 0; i < ks.length; i += 1) {
@@ -146,7 +174,7 @@ class Curve {
     this.expand_cache[cmp.toString()] = this.base;
   }
 
-  expand(val) {
+  expand(val): Point {
     const pa = this.a;
 
     const pb = this.b;
@@ -154,17 +182,17 @@ class Curve {
     let x;
     let y;
 
-    if (typeof val === "string") {
-      x = new Field(val, "hex", this);
+    if (typeof val === 'string') {
+      x = new Field(val, 'hex', this);
     } else {
       x = val;
     }
-    x = x._is_field ? x : new Field(x, "buf32", this);
+    x = x._is_field ? x : new Field(x, 'buf32', this);
 
     if (x.is_zero()) {
       return {
         x,
-        y: pb.mod_mul(pb)
+        y: pb.mod_mul(pb),
       };
     }
 
@@ -196,7 +224,7 @@ class Curve {
 
     const trace_y = y.trace();
 
-    if ((k === true && trace_y === 0) || (k === false && trace_y !== 0)) {
+    if ((k && trace_y === 0) || (!k && trace_y !== 0)) {
       y.bytes[0] ^= 1;
     }
 
@@ -204,7 +232,7 @@ class Curve {
 
     return {
       x,
-      y
+      y,
     };
   }
 
@@ -248,7 +276,7 @@ class Curve {
     do {
       let rand8 = new global.Uint8Array(words);
       rand8 = random(rand8);
-      ret = new Field(rand8, "buf8", this);
+      ret = new Field(rand8, 'buf8', this);
     } while (this.order.less(ret));
 
     return ret;
@@ -261,8 +289,8 @@ class Curve {
 
   pubkey(inp, input_fmt) {
     let fmt = input_fmt || Pub.detect_format(inp);
-    if (fmt === "raw") {
-      fmt = "buf32";
+    if (fmt === 'raw') {
+      fmt = 'buf32';
     }
     const compressed = new Field(inp, fmt, this);
     const pointQ = this.point(compressed);
@@ -270,7 +298,7 @@ class Curve {
   }
 
   equals(other) {
-    const for_check = ["a", "b", "order", "modulus"];
+    const for_check = ['a', 'b', 'order', 'modulus'];
     for (let i = 0; i < for_check.length; i += 1) {
       const attr = for_check[i];
       if (!this[attr].equals(other[attr])) {
@@ -297,25 +325,25 @@ class Curve {
     let ks_p;
     if (this.ks.length === 1) {
       ks_p = {
-        type: "trinominal",
-        value: this.ks[0]
+        type: 'trinominal',
+        value: this.ks[0],
       };
     } else {
       ks_p = this.ks;
       ks_p = {
-        type: "pentanominal",
-        value: { k1: ks_p[0], k2: ks_p[1], k3: ks_p[2] }
+        type: 'pentanominal',
+        value: { k1: ks_p[0], k2: ks_p[1], k3: ks_p[2] },
       };
     }
     return {
       p: {
         param_m: this.m,
-        ks: ks_p
+        ks: ks_p,
       },
       param_a: this.param_a.bytes[0],
       param_b: this.param_b.le(),
       order: new bn.BN(this.order.buf8(), 8),
-      bp: this.base.compress().le()
+      bp: this.base.compress().le(),
     };
   }
 
@@ -347,22 +375,22 @@ class Curve {
       257: 6,
       307: 7,
       367: 8,
-      431: 9
+      431: 9,
     }[this.m];
   }
 
   name() {
     return [
-      "DSTU_PB_163",
-      "DSTU_PB_167",
-      "DSTU_PB_173",
-      "DSTU_PB_179",
-      "DSTU_PB_191",
-      "DSTU_PB_233",
-      "DSTU_PB_257",
-      "DSTU_PB_307",
-      "DSTU_PB_367",
-      "DSTU_PB_431"
+      'DSTU_PB_163',
+      'DSTU_PB_167',
+      'DSTU_PB_173',
+      'DSTU_PB_179',
+      'DSTU_PB_191',
+      'DSTU_PB_233',
+      'DSTU_PB_257',
+      'DSTU_PB_307',
+      'DSTU_PB_367',
+      'DSTU_PB_431',
     ][this.curve_id()];
   }
 }

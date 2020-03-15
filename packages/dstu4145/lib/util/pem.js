@@ -2,7 +2,7 @@
 
 var Buffer = require('buffer').Buffer;
 var b64_decode = require('./base64.js').b64_decode;
-var b64_encode = require('../util/base64.js').b64_encode;
+var b64_encode = require('./base64.js').b64_encode;
 
 var is_pem = function (indata) {
     if (indata.constructor === Uint8Array || Buffer.isBuffer(indata)) {
