@@ -1,5 +1,3 @@
-'use strict';
-
 // DKU
 import { Buffer } from 'buffer';
 

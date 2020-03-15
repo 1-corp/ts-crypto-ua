@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "JKS format decoder",
   "main": "build/src/index.js",
+  "files": [
+    "build/src/*"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -20,7 +23,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "buffer": "^5.4.3",
+    "buffer": "^5.5.0",
     "js-sha1": "^0.6.0"
   },
   "jest": {

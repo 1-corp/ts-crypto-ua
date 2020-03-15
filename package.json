@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "github:1-corp/ts-crypto-ua",
   "scripts": {
-    "compile": "npx lerna run compile",
+    "publish:all": "lerna publish from-package",
     "packages-audit": "npx lerna run audit",
     "lint": "npx lerna run lint",
     "test": "npx lerna run test",
@@ -16,21 +16,21 @@
     "clean": "npx lerna clean"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.21",
-    "@types/node": "^10.0.3",
-    "eslint": "^6.6.0",
-    "eslint-plugin-compat": "^3.3.0",
-    "gts": "^1.1.0",
-    "jest": "^24.9.0",
-    "jest-cli": "^24.9.0",
-    "prettier": "^1.17.0",
-    "ts-jest": "^24.1.0",
-    "tslint": "^6.0.0-beta0",
-    "typescript": "~3.5.0"
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-compat": "^3.5.1",
+    "gts": "^1.1.2",
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.1",
+    "tslint": "^6.1.0",
+    "typescript": "~3.8.3"
   },
   "dependencies": {
     "@1-corp/dstu-gost": "file:packages/dstu-gost",
     "@1-corp/dstu4145": "file:packages/dstu4145",
-    "jksreader": "file:packages/jksreader"
+    "@1-corp/jksreader": "file:packages/jksreader"
   }
 }

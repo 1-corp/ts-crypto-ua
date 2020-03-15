@@ -1,5 +1,3 @@
-'use strict';
-
 import { Gost } from './gost89';
 import { gosthash, Hash } from './hash';
 import { dumb_kdf, pbkdf } from './util';

@@ -1,5 +1,3 @@
-'use strict';
-
 import {
   Buffer,
   ParsedData,

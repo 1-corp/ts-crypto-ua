@@ -1,5 +1,3 @@
-'use strict';
-
 import { Gost } from './gost89';
 
 export class Hash {

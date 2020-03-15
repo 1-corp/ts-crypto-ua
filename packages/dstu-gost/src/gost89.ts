@@ -1,5 +1,3 @@
-'use strict';
-
 import { Buffer } from './types';
 import { defaultSbox } from './dstu';
 
