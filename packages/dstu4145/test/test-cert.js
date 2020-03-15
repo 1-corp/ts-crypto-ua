@@ -161,26 +161,28 @@ describe('Certificate', () => {
     it('should parse certificate from binary', () => {
       expect(cert.format).toEqual('x509');
       expect(cert.curve.m).toEqual(257);
-      expect(cert.curve.mod_bits).toEqual([257, 12, 0]);
-      expect(cert.pk_data).toEqual([
-        '0xb59265f0',
-        '0xaaf792b8',
-        '0xdda16518',
-        '0x286cb42b',
-        '0x3e1be80f',
-        '0x5751c3ac',
-        '0xe579a40',
-        '0x5002f847',
-        '0x1',
-      ]);
+      expect(cert.curve.mod_bits[0]).toEqual(257);
+      expect(cert.curve.mod_bits[1]).toEqual(12);
+      expect(cert.curve.mod_bits[2]).toEqual(0);
+
+      expect(cert.pk_data[0]).toEqual(0xb59265f0);
+      expect(cert.pk_data[1]).toEqual(0xaaf792b8);
+      expect(cert.pk_data[2]).toEqual(0xdda16518);
+      expect(cert.pk_data[3]).toEqual(0x286cb42b);
+      expect(cert.pk_data[4]).toEqual(0x3e1be80f);
+      expect(cert.pk_data[5]).toEqual(0x5751c3ac);
+      expect(cert.pk_data[6]).toEqual(0xe579a40);
+      expect(cert.pk_data[7]).toEqual(0x5002f847);
+      expect(cert.pk_data[8]).toEqual(0x1);
+
       expect(cert.valid.from).toEqual(1450447200000); // 2015-12-18 14:00:00
       expect(cert.valid.to).toEqual(1608300000000); // UTCTime 2018-11-02 22:00:00 UTC
-      expect(cert.serial).toEqual(
-        274130962303897476041362771173503318330938753024
+      expect(cert.serial.toString()).toEqual(
+        '274130962303897476041362771173503318330938753024'
       );
       expect(cert.signatureAlgorithm).toEqual('Dstu4145le');
       expect(cert.pubkeyAlgorithm).toEqual('Dstu4145le');
-      expect(cert.extension.ipn).toEqual(null);
+      expect(cert.extension.ipn).toEqual(undefined);
 
       expect(cert.subject.commonName).toEqual('АЦСК органів юстиції України');
       expect(cert.subject.organizationName).toEqual('ДП "НАІС"');
